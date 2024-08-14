@@ -315,9 +315,9 @@ width = 32
 ################################################################
 # load data and data normalization
 ################################################################
-PATH_Sigma = './data/Random_UnitCell_sigma_10.npy'
-PATH_XY = './data/Random_UnitCell_XY_10.npy'
-PATH_rr = './data/Random_UnitCell_rr_10.npy'
+PATH_Sigma = '../data/elasticity/Meshes/Random_UnitCell_sigma_10.npy'
+PATH_XY = '../data/elasticity/Meshes/Random_UnitCell_XY_10.npy'
+PATH_rr = '../data/elasticity/Meshes/Random_UnitCell_rr_10.npy'
 
 input_rr = np.load(PATH_rr)
 input_rr = torch.tensor(input_rr, dtype=torch.float).permute(1,0)

@@ -1,0 +1,4 @@
+__pycache__
+data/
+airfoils/fno_interp
+airfoils/geofno

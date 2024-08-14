@@ -1,7 +1,7 @@
 """
 @author: Zongyi Li and Daniel Zhengyu Huang
 """
-
+import os
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 from timeit import default_timer
@@ -151,7 +151,7 @@ batch_size = 20
 learning_rate = 0.001
 
 epochs = 501
-step_size = 100
+step_size = 1000
 gamma = 0.5
 
 modes = 12
@@ -236,7 +236,9 @@ for ep in range(epochs):
 
     # plot
     if ep%step_size==0:
-        # torch.save(model, '../model/naca_plain_model_'+str(ep))
+        if not os.path.exists('geofno'):
+            os.makedirs('geofno')
+        torch.save(model, 'geofno/naca_plain_model_'+str(ep))
 
         ind = -1
         X = x[ind, :, :, 0].squeeze().detach().cpu().numpy()
@@ -257,6 +259,9 @@ for ep in range(epochs):
         ax[0,1].pcolormesh(X_small, Y_small, truth_small, shading='gouraud')
         ax[1,1].pcolormesh(X_small, Y_small, pred_small, shading='gouraud')
         ax[2,1].pcolormesh(X_small, Y_small, np.abs(pred_small-truth_small), shading='gouraud')
-        fig.show()
+        # fig.show()
+        #cdj 保存图形为文件
+        fig.savefig('geofno/output_'+ str(ep)+'.png')
+        plt.close(fig)  # 关闭图形以释放内存
 
 

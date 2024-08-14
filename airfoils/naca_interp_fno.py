@@ -43,7 +43,7 @@ class SpectralConv2d(nn.Module):
     def forward(self, x):
         batchsize = x.shape[0]
         # Compute Fourier coeffcients up to factor of e^(- something constant)
-        x_ft = torch.fft.rfft2(x)
+        x_ft = torch.fft.rfft2(x) #x ([20, 32, 110, 110]) x_ft ([20, 32, 110, 56])
 
         # Multiply relevant Fourier modes
         out_ft = torch.zeros(batchsize, self.out_channels, x.size(-2), x.size(-1) // 2 + 1, dtype=torch.cfloat,
@@ -232,7 +232,7 @@ for ep in range(epochs):
     print(ep, t2 - t1, train_l2, test_l2)
 
     if ep%step_size==0:
-        # torch.save(model, '../model/naca_interp_' + str(ep))
+        torch.save(model, 'fno_interp/naca_interp_' + str(ep))
         X = XX
         Y = YY
         truth = y[-1].squeeze().detach().cpu().numpy()
@@ -242,6 +242,8 @@ for ep in range(epochs):
         ax[0].pcolormesh(X, Y, truth, shading='gouraud')
         ax[1].pcolormesh(X, Y, pred, shading='gouraud')
         ax[2].pcolormesh(X, Y, pred-truth, shading='gouraud')
-        fig.show()
-
+        # fig.show()
+        #cdj 保存图形为文件
+        fig.savefig('model/output_'+ str(ep)+'.png')
+        plt.close(fig)  # 关闭图形以释放内存
 
